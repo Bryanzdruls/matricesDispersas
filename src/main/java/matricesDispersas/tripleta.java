@@ -100,11 +100,12 @@ public class tripleta
     public tripleta insertarDato()//Arreglar
     {
         int f, c, d, k=1,swIgual=0;
-        d = Integer.parseInt(JOptionPane.showInputDialog("Que dato desea ingresar: "));
+        
         f = Integer.parseInt(JOptionPane.showInputDialog("¿En que fila lo desea insertar?"));
         if(f<getTri(0, 0)&& !(f<0))
         {
             c = Integer.parseInt(JOptionPane.showInputDialog("¿En que columna lo desea insertar?"));
+            d = Integer.parseInt(JOptionPane.showInputDialog("Que dato desea ingresar: "));
             if(c<getTri(0, 1)&& !(c<0))
             {
                while(k<=getTri(0, 2))//caso suma
@@ -119,11 +120,12 @@ public class tripleta
                if(swIgual == 0)
                {
                    tripleta t1 = new tripleta(getTri(0, 2)+2);//CREAR NUEVA TRIPLETA
-                   t1.setTri(0, 2, getTri(0,2)+1);//DATOS <> 0 NUEVA TRIPLETA                                 
-                   t1 =t1.llenarTri(this);//LLENAR TRIPLETA CON DATOS ORIGINALES
+                   t1.setTri(0, 2, getTri(0,2)+1);//DATOS <> 0 NUEVA TRIPLETA  
                    t1.setTri(f, 0, f);//En la posicion de la fila le ponemos el dato de la fila
                    t1.setTri(f, 1, c);//En la posicion de la columna le ponemos el dato de la columna.
                    t1.setTri(f, 2, d);//En la posicion respectiva le ponemos el dato.  
+                   t1 =t1.llenarTri(this);//LLENAR TRIPLETA CON DATOS ORIGINALES
+                   
                    return t1;
                }
             }
@@ -157,7 +159,7 @@ public class tripleta
         int i=1, j=1;
         setTri(0, 0, t.getTri(0, 0));
         setTri(0, 1, t.getTri(0, 1));
-        while (i<this.getTri(0, 2))
+        while (i<=this.getTri(0, 2))
         {       
             if(getTri(i, 2)==0)
             {
