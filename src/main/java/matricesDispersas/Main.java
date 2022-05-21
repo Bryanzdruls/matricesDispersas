@@ -77,8 +77,8 @@ public class Main {
                             t1.sumaFilas();//Funciona
                             break;
                         case 2://Suma de columnas.
-                            System.out.println("Suma de columnas: n");
-                            
+                            System.out.println("Suma de columnas: ");
+                            t1.sumaColumnas();
                             break;
                         case 3://Insertar Dato
                             

@@ -73,7 +73,26 @@ public class tripleta
                 sumaF += tri[k][2];
                 k++;
             }
-            System.out.println("La suma de filas "+ valor+ "es: "+sumaF);       
+            System.out.println("La suma de filas "+ valor+ " es: "+sumaF);       
         }
     }//Fin sumar filas.
+    public void sumaColumnas()
+    {
+        int sumC, k=1, valor =0;
+        while (valor<=tri[0][1]) 
+        {
+            sumC=0;
+            while (k<=tri[0][1])
+            {                
+                if(tri[k][1]==valor)
+                {
+                    sumC+=tri[k][2];
+                }
+                k++;
+            }
+            System.out.println("La suma de Columnas "+ valor+ " es: "+sumC); 
+            valor+=1;
+            k=1;
+        }
+    }
 }//Fin class
