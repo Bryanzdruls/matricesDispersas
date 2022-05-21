@@ -92,7 +92,7 @@ public class Main {
                     break;
                 case 4:
                     System.out.println("MATRIZ REHECHA");
-                    Matriz(mat,n,m, sw, Dif0);
+                    Dif0=Matriz(mat,n,m, sw, Dif0);
                     t1= new tripleta(Dif0+1);
                     swTri=0;
                     break;
@@ -186,7 +186,6 @@ public class Main {
             {
                 mat[aleatorio.nextInt(4-1)][aleatorio.nextInt(4-1)]=aleatorio.nextInt(99);
                 sw=1;
-                dif0= dif0+1;
             }
             else
             {
@@ -199,6 +198,10 @@ public class Main {
         for (int i = 0; i < mat.length; i++)
         {
             for (int j = 0; j <mat[0].length; j++) {
+                if(mat[i][j] !=0)
+                {                                    
+                    dif0= dif0+1;
+                }
                 System.out.print("|"+mat[i][j]+"|");
             }
             System.out.println("");
