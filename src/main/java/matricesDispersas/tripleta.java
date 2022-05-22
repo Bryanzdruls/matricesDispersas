@@ -104,14 +104,19 @@ public class tripleta {
         if (f < getTri(0, 0) && !(f < 0)) {
             c = Integer.parseInt(JOptionPane.showInputDialog("¿En que columna lo desea insertar?"));
             d = Integer.parseInt(JOptionPane.showInputDialog("Que dato desea ingresar: "));
-            if (c < getTri(0, 1) && !(c < 0))//En caso de que la posicion exista dentro de los limites
+            if (c < getTri(0, 1) && !(c < 0) && d!=0)//En caso de que la posicion exista dentro de los limites
             {
                 
                 while (k <= getTri(0, 2))//caso suma
                 {
-                    if (f == getTri(k, 0) && c == getTri(k, 1)) {
+                    if (f == getTri(k, 0) && c == getTri(k, 1)&&(getTri(k,2)+d)!=0) {                      
                         setTri(k, 2, getTri(k, 2) + d);
                         swIgual = 1;
+                    }
+                    else if((getTri(k,2)+d)==0)//caso donde de 0
+                    {
+                        //Eliminar getTri(k,2)
+                       swIgual = 1;
                     }
                     k++;
                 }
@@ -135,6 +140,10 @@ public class tripleta {
                     return t1;
                 }
             } else {
+                if(d==0)
+                {
+                   JOptionPane.showMessageDialog(null, "No se puede insertar un 0."); 
+                }
                 if (c > getTri(0, 1)) {
                     JOptionPane.showMessageDialog(null, "La fila insertada es mayor que la cantidad de filas en la tripleta.");
                 } else if (c < 0) {
