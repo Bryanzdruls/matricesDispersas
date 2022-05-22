@@ -104,7 +104,9 @@ public class tripleta {
         if (f < getTri(0, 0) && !(f < 0)) {
             c = Integer.parseInt(JOptionPane.showInputDialog("¿En que columna lo desea insertar?"));
             d = Integer.parseInt(JOptionPane.showInputDialog("Que dato desea ingresar: "));
-            if (c < getTri(0, 1) && !(c < 0)) {
+            if (c < getTri(0, 1) && !(c < 0))//En caso de que la posicion exista dentro de los limites
+            {
+                
                 while (k <= getTri(0, 2))//caso suma
                 {
                     if (f == getTri(k, 0) && c == getTri(k, 1)) {
@@ -113,14 +115,23 @@ public class tripleta {
                     }
                     k++;
                 }
-                if (swIgual == 0) {//
+                if (swIgual == 0|| f==0) {//En caso de que no exista la posicion
                     tripleta t1 = new tripleta(getTri(0, 2) + 2);//CREAR NUEVA TRIPLETA
-                    t1.setTri(0, 2, getTri(0, 2) + 1);//DATOS <> 0 NUEVA TRIPLETA  
-                    t1.setTri(f, 0, f);//En la posicion de la fila le ponemos el dato de la fila
-                    t1.setTri(f, 1, c);//En la posicion de la columna le ponemos el dato de la columna.
-                    t1.setTri(f, 2, d);//En la posicion respectiva le ponemos el dato.  
-                    t1 = t1.llenarTri(this, f, c, d);//LLENAR TRIPLETA CON DATOS ORIGINALES
-
+                    t1.setTri(0, 2, getTri(0, 2) + 1);//DATOS <> 0 NUEVA TRIPLETA
+                    if(f==0)//Caso fila 0
+                    {
+                        t1.setTri(f+1, 0, f);//En la posicion de la fila le ponemos el dato de la fila
+                        t1.setTri(f+1, 1, c);//En la posicion de la columna le ponemos el dato de la columna.
+                        t1.setTri(f+1, 2, d);//En la posicion respectiva le ponemos el dato.  
+                        t1 = t1.llenarTri(this, f, c, d);//LLENAR TRIPLETA CON DATOS ORIGINALES
+                    } 
+                    else//caso fila !=0
+                    {
+                      t1.setTri(f, 0, f);//En la posicion de la fila le ponemos el dato de la fila
+                        t1.setTri(f, 1, c);//En la posicion de la columna le ponemos el dato de la columna.
+                        t1.setTri(f, 2, d);//En la posicion respectiva le ponemos el dato.  
+                        t1 = t1.llenarTri(this, f, c, d);//LLENAR TRIPLETA CON DATOS ORIGINALES  
+                    }
                     return t1;
                 }
             } else {
@@ -156,24 +167,50 @@ public class tripleta {
                 i++;
             }            
         }
-        //this.ordenar();
+        this.ordenar();
         return this;
     }//Fin llenar tripleta
 
-    public void ordenar() {
-        int n = this.getTri(0, 0), m = this.getTri(0, 1), i = 1, valorm = 0;
-        tripleta t1 = new tripleta(this.getTri(0, 2) + 1);
+    public void ordenar() {//REVISAR
+        int n = this.getTri(0, 0), m = this.getTri(0, 1), auxF = 0, auxC=0,auxD;
 
-        while (i <= n) {//Identificar menor
-            if (valorm>getTri(i, 0)) {
-                valorm = getTri(i, 0);
-            }
-            i++;
-        }//Fin identificar fila menor
-        i=1;
-        while(i<n)
+        //Metodo burbuja
+        for (int i = 1; i < n-1; i++)
         {
-            
+            for (int j = 1; j < n-1; j++) //Ordenar filas
+            {
+                if (getTri(j, 0)>=getTri(j+1, 0)) {
+                    auxF=getTri(j, 0);
+                    auxC=getTri(j,1);
+                    auxD=getTri(j,2);
+                            
+                    setTri(j,0,getTri(j+1, 0));
+                    setTri(j,1,getTri(j+1, 1));
+                    setTri(j,2,getTri(j+1, 2));
+                    
+                    setTri(j+1, 0, auxF);
+                    setTri(j+1, 1, auxC);
+                    setTri(j+1, 2, auxD);
+                }               
+            }
         }
-    }
+//        for (int i = 1; i < n-1; i++)
+//        {
+//            for (int j = 1; j < n-1; j++) //Ordenar columnas
+//            {
+//                if((getTri(j,0)==getTri(j+1,0))&& getTri(j,1)>getTri(j+1,1))
+//                {
+//                    auxC=getTri(j,1);
+//                    auxD=getTri(j,2);
+//                    setTri(j,1,getTri(j+1, 1));
+//                    setTri(j,2,getTri(j+1, 2));
+//                    setTri(j+1, 1, auxC);
+//                    setTri(j+1, 2, auxD);
+//                }           
+//            }
+//        }//Fin ordenar columnas
+       
+    }//Fin ordenar
+    
+    
 }//Fin class
