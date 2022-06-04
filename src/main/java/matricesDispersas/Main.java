@@ -49,7 +49,7 @@ public class Main {
                             t1 = t1.insertarDato();
                             break;
                         case 4://Eliminar Dato
-                            
+                            t1 = t1.eliminarDato();
                             break;
                         case 5:
                             
