@@ -76,7 +76,7 @@ public class tripleta {
         }
     }//Fin sumar filas.
 
-    public void sumaColumnas()//Bien
+    public void sumaColumnas()//Arreglar 2 datos
     {
         int sumC, k = 1, valor = 0;
         while (valor <= tri[0][1]) {
@@ -105,8 +105,7 @@ public class tripleta {
             c = Integer.parseInt(JOptionPane.showInputDialog("¿En que columna lo desea insertar?"));
             d = Integer.parseInt(JOptionPane.showInputDialog("Que dato desea ingresar: "));
             if (c < getTri(0, 1) && !(c < 0) && d!=0)//En caso de que la posicion exista dentro de los limites
-            {
-                
+            {                
                 while (k <= getTri(0, 2))//caso suma
                 {
                     if (f == getTri(k, 0) && c == getTri(k, 1)&&(getTri(k,2)+d)!=0) {                      
@@ -116,27 +115,16 @@ public class tripleta {
                     else if((getTri(k,2)+d)==0)//caso donde de 0
                     {
                         //Eliminar getTri(k,2)
-                       swIgual = 1;
+                        swIgual = 1;
                     }
                     k++;
                 }
                 if (swIgual == 0|| f==0) {//En caso de que no exista la posicion
                     tripleta t1 = new tripleta(getTri(0, 2) + 2);//CREAR NUEVA TRIPLETA
                     t1.setTri(0, 2, getTri(0, 2) + 1);//DATOS <> 0 NUEVA TRIPLETA
-                    if(f==0)//Caso fila 0
-                    {
-                        t1.setTri(f+1, 0, f);//En la posicion de la fila le ponemos el dato de la fila
-                        t1.setTri(f+1, 1, c);//En la posicion de la columna le ponemos el dato de la columna.
-                        t1.setTri(f+1, 2, d);//En la posicion respectiva le ponemos el dato.  
-                        t1 = t1.llenarTri(this, f, c, d);//LLENAR TRIPLETA CON DATOS ORIGINALES
-                    } 
-                    else//caso fila !=0
-                    {
-                      t1.setTri(f, 0, f);//En la posicion de la fila le ponemos el dato de la fila
-                        t1.setTri(f, 1, c);//En la posicion de la columna le ponemos el dato de la columna.
-                        t1.setTri(f, 2, d);//En la posicion respectiva le ponemos el dato.  
-                        t1 = t1.llenarTri(this, f, c, d);//LLENAR TRIPLETA CON DATOS ORIGINALES  
-                    }
+                    t1.setTri(0,0,this.getTri(0,0));
+                    t1.setTri(0,1,this.getTri(0,1)); 
+                    t1.llenarTri(this, f, c, d);                
                     return t1;
                 }
             } else {
@@ -145,9 +133,9 @@ public class tripleta {
                    JOptionPane.showMessageDialog(null, "No se puede insertar un 0."); 
                 }
                 if (c > getTri(0, 1)) {
-                    JOptionPane.showMessageDialog(null, "La fila insertada es mayor que la cantidad de filas en la tripleta.");
+                    JOptionPane.showMessageDialog(null, "La Columna insertada es mayor que la cantidad de filas en la tripleta.");
                 } else if (c < 0) {
-                    JOptionPane.showMessageDialog(null, "No existen filas menores que 0.");
+                    JOptionPane.showMessageDialog(null, "No existen Columnas menores que 0.");
                 }
             }//Fin condicion tamaño de C           
         } else {
@@ -160,66 +148,107 @@ public class tripleta {
         return this;
     }//Fin insertar
 
-    public tripleta llenarTri(tripleta t, int f, int c, int d)//Bien
+    public tripleta llenarTri(tripleta tOld, int f, int c, int d)//
     {
-        int i = 1, j = 1;
-        setTri(0, 0, t.getTri(0, 0));
-        setTri(0, 1, t.getTri(0, 1));
-        while (i <= this.getTri(0, 2)) {
-            if (getTri(i, 2) == 0) {
-                setTri(i, 0, t.getTri(j, 0));
-                setTri(i, 1, t.getTri(j, 1));
-                setTri(i, 2, t.getTri(j, 2));
-                i++;
-                j++;
-            } else {
-                i++;
-            }            
+        int i=1,j=1, sw=0;
+        while(j<= this.getTri(0, 2))//Bueno
+        {           
+            if(i<=tOld.getTri(0,2))
+            {
+                if((tOld.getTri(i, 0) < 
+                        f)||(tOld.getTri(i, 0) == f && tOld.getTri(i, 1)<c)||(tOld.getTri(i, 0) < f)||sw==1)//Bueno
+                {
+                    this.setTri(j, 0, tOld.getTri(i, 0));//LLenado de filas
+                    this.setTri(j,1, tOld.getTri(i,1));//Llenado columnas
+                    this.setTri(j,2,tOld.getTri(i,2));//LLenado de datos             
+                    i++;
+                }
+                else //Caso insertar
+                {
+                    this.setTri(j, 0, f);
+                    this.setTri(j, 1, c);
+                    this.setTri(j, 2, d);
+                    sw=1;
+                }
+            }  
+            else //Caso insertar
+            {
+                if(sw!=1)
+                {
+                    this.setTri(j, 0, f);
+                    this.setTri(j, 1, c);
+                    this.setTri(j, 2, d);
+                    sw=1;  
+                }                           
+            }
+            j++;
         }
-        this.ordenar();
         return this;
     }//Fin llenar tripleta
+    
+    public tripleta eliminarDato()//Regular
+    {
+       int f, c, d,j=1, k = 1, sw = 0;
 
-    public void ordenar() {//REVISAR
-        int n = this.getTri(0, 0), m = this.getTri(0, 1), auxF = 0, auxC=0,auxD;
-
-        //Metodo burbuja
-        for (int i = 1; i < n-1; i++)
-        {
-            for (int j = 1; j < n-1; j++) //Ordenar filas
-            {
-                if (getTri(j, 0)>=getTri(j+1, 0)) {
-                    auxF=getTri(j, 0);
-                    auxC=getTri(j,1);
-                    auxD=getTri(j,2);
-                            
-                    setTri(j,0,getTri(j+1, 0));
-                    setTri(j,1,getTri(j+1, 1));
-                    setTri(j,2,getTri(j+1, 2));
-                    
-                    setTri(j+1, 0, auxF);
-                    setTri(j+1, 1, auxC);
-                    setTri(j+1, 2, auxD);
-                }               
+        f = Integer.parseInt(JOptionPane.showInputDialog("¿En que fila se encuentra?"));
+        if (f < getTri(0, 0) && !(f < 0)) {
+            c = Integer.parseInt(JOptionPane.showInputDialog("¿En que columna se encuentra?"));
+            d = Integer.parseInt(JOptionPane.showInputDialog("Que dato desea Eliminar: "));
+            if (c < getTri(0, 1) && !(c < 0))//En caso de que la posicion exista dentro de los limites
+            {                
+                while(k<=getTri(0,2))
+                {
+                    if(getTri(k,0)==f && getTri(k,1)==c && getTri(k,2)==d)
+                    {
+                        setTri(k,0,-1);
+                        setTri(k,1,-1);
+                        setTri(k,2,-1);
+                        sw=1;
+                    }
+                    k++;
+                }
+                k=1;
+                if(sw==1)
+                {
+                    tripleta t1= new tripleta(this.getTri(0, 2));
+                    t1.setTri(0, 0, getTri(0,0));//Fila
+                    t1.setTri(0, 1, getTri(0,1));//Columna
+                    t1.setTri(0, 2, getTri(0,2)-1);//Datos <> 0
+                    while(k<=t1.getTri(0, 2))
+                    {
+                        if(getTri(j,0)!=-1 && getTri(j,1)!=-1)
+                        {
+                            t1.setTri(k, 0, getTri(j,0));//Fila
+                            t1.setTri(k, 1, getTri(j,1));//Columna
+                            t1.setTri(k, 2, getTri(j,2));//Datos <> 0
+                        }
+                        else
+                        {
+                            j++;
+                        }
+                        k++;
+                    }
+                    return t1;
+                }              
+                else if(sw==0)
+                {
+                    JOptionPane.showMessageDialog(null, "No se encontro el dato.");
+                }
+                
+            } else {
+                if (c > getTri(0, 1)) {
+                    JOptionPane.showMessageDialog(null, "La Columna es mayor que la cantidad de filas en la tripleta.");
+                } else if (c < 0) {
+                    JOptionPane.showMessageDialog(null, "No existen filas menores que 0.");
+                }
+            }//Fin condicion tamaño de C           
+        } else {
+            if (f > getTri(0, 0)) {
+                JOptionPane.showMessageDialog(null, "La fila  es mayor que la cantidad de filas en la tripleta.");
+            } else if (f < 0) {
+                JOptionPane.showMessageDialog(null, "No existen filas menores que 0.");
             }
-        }
-//        for (int i = 1; i < n-1; i++)
-//        {
-//            for (int j = 1; j < n-1; j++) //Ordenar columnas
-//            {
-//                if((getTri(j,0)==getTri(j+1,0))&& getTri(j,1)>getTri(j+1,1))
-//                {
-//                    auxC=getTri(j,1);
-//                    auxD=getTri(j,2);
-//                    setTri(j,1,getTri(j+1, 1));
-//                    setTri(j,2,getTri(j+1, 2));
-//                    setTri(j+1, 1, auxC);
-//                    setTri(j+1, 2, auxD);
-//                }           
-//            }
-//        }//Fin ordenar columnas
-       
-    }//Fin ordenar
-    
-    
+        }//Fin condicion tamaño de f.  
+        return this; 
+    }
 }//Fin class
