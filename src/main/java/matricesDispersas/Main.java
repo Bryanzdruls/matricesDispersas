@@ -51,11 +51,11 @@ public class Main {
                         case 4://Eliminar Dato
                             t1 = t1.eliminarDato();
                             break;
-                        case 5:
-                            
+                        case 5://Mostrar mayor impar F
+                            t1.Impar();
                             break;
-                        case 6:
-                            
+                        case 6://Mayor promedio col
+                            t1.mayorPromCol();
                             break;
                         case 7:
                             

@@ -76,12 +76,12 @@ public class tripleta {
         }
     }//Fin sumar filas.
 
-    public void sumaColumnas()//Arreglar 2 datos
+    public void sumaColumnas()//REVISAR CON UN DATO
     {
         int sumC, k = 1, valor = 0;
-        while (valor <= tri[0][1]) {
+        while (valor <= tri[0][2]) {
             sumC = 0;
-            while (k <= tri[0][1]) {
+            while (k <= tri[0][2]) {
                 if (tri[k][1] == valor) {
                     sumC += tri[k][2];
                 }
@@ -250,5 +250,57 @@ public class tripleta {
             }
         }//Fin condicion tamaño de f.  
         return this; 
+    }
+    
+    public void Impar()//CASI BUENO
+    {
+        int i=1,fila , Mimpar;
+        
+        while (i<=getTri(0,2))
+        {    
+            Mimpar=0;
+            fila=getTri(i,0);
+            while(i<=getTri(0,2)&&getTri(i, 0)==fila)
+            {
+                if ((getTri(i, 2)%2!=0)&&(Mimpar<getTri(i,2)))
+                {
+                    Mimpar= getTri(i,2);
+                }
+                i++;               
+            }//Fin while  
+            if(Mimpar !=0){
+                System.out.println("El mayor dato impar de la fila "+fila+" es: "+Mimpar);
+            }
+        }
+            
+    }//Fin impar
+    public void mayorPromCol()//Revisar con un dato
+    {
+        int sumC, k = 1, valor = 0, cont=0, prom=0, MProm=0,Mcol=0;
+        while (valor <= tri[0][2]) {
+            sumC = 0;
+            cont=0;
+            prom=0;
+            while (k <= tri[0][2]) {
+                if (tri[k][1] == valor) {
+                    sumC += tri[k][2];
+                    cont++;                    
+                }               
+                k++;
+            }
+            if(sumC !=0)
+            {
+                prom = sumC/cont;  
+                if(prom>MProm)
+                {
+                    MProm=prom;
+                    Mcol=valor;
+                }
+                
+            }          
+            valor += 1;
+            k = 1;
+        }
+        System.out.println("El promedio de la columna " + Mcol + " es: " + MProm);
     }
 }//Fin class
